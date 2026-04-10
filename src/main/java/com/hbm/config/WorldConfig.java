@@ -274,7 +274,7 @@ public class WorldConfig {
 		tektoBedrockGasPerDepositMax = CommonConfig.createConfigInt(config, CATEGORY_OREGEN, "2.O37_tektoBedrockGasPerDepositMax", "Maximum natural gas extracted per bedrock oil block suck", tektoBedrockGasPerDepositMax);
 
 
-		newBedrockOres = CommonConfig.createConfigBool(config, CATEGORY_OREGEN, "2.NB_newBedrockOres", "Enables the newer genreric bedrock ores", true);
+		newBedrockOres = CommonConfig.createConfigBool(config, CATEGORY_OREGEN, "2.NB_newBedrockOres", "Enables the newer genreric bedrock ores", false);
 		bedrockIronSpawn = CommonConfig.createConfigInt(config, CATEGORY_OREGEN, "2.B00_bedrockIronWeight", "Spawn weight for iron bedrock ore", 100);
 		bedrockCopperSpawn = CommonConfig.createConfigInt(config, CATEGORY_OREGEN, "2.B01_bedrockCopperWeight", "Spawn weight for copper bedrock ore", 200);
 		bedrockBoraxSpawn = CommonConfig.createConfigInt(config, CATEGORY_OREGEN, "2.B02_bedrockBoraxWeight", "Spawn weight for borax bedrock ore", 50);

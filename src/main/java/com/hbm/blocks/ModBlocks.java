@@ -55,6 +55,9 @@ public class ModBlocks {
 	public static Block structure_anchor;
 
 	public static Block ore_epsteinium;
+	public static Block ore_ironrich;
+	public static Block ore_copperrich;
+	public static Block ore_carbonrich;
 
 	// Vanilla ores for other planets
 	public static Block ore_iron;
@@ -1418,6 +1421,10 @@ public class ModBlocks {
 
 		ore_epsteinium = new BlockOre(Material.rock).setBlockName("ore_epsteinium").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_epsteinium");
 
+		ore_ironrich = new BlockGeneric(Material.rock).setBlockName("ore_ironrich").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(5.0F).setBlockTextureName(RefStrings.MODID + ":ore_ironrich");
+		ore_copperrich = new BlockGeneric(Material.rock).setBlockName("ore_copperrich").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(5.0F).setBlockTextureName(RefStrings.MODID + ":ore_copperrich");
+		ore_carbonrich = new BlockGeneric(Material.rock).setBlockName("ore_carbonrich").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(5.0F).setBlockTextureName(RefStrings.MODID + ":ore_carbonrich");
+
 		ore_iron = new BlockOre(Material.rock, Blocks.iron_ore).setBlockName("ore_iron").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(5.0F).setBlockTextureName(RefStrings.MODID + ":ore_iron");
 		ore_gold = new BlockOre(Material.rock, Blocks.gold_ore).setBlockName("ore_gold").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(5.0F).setBlockTextureName(RefStrings.MODID + ":ore_gold");
 		ore_redstone = new BlockOre(Material.rock, Blocks.redstone_ore).setBlockName("ore_redstone").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(5.0F).setBlockTextureName(RefStrings.MODID + ":ore_redstone");
@@ -2748,6 +2755,10 @@ public class ModBlocks {
 		GameRegistry.registerBlock(structure_anchor, structure_anchor.getUnlocalizedName());
 
 		GameRegistry.registerBlock(ore_epsteinium, ItemBlockBase.class, ore_epsteinium.getUnlocalizedName());
+
+		GameRegistry.registerBlock(ore_ironrich, ItemBlockBase.class, ore_ironrich.getUnlocalizedName());
+		GameRegistry.registerBlock(ore_copperrich, ItemBlockBase.class, ore_copperrich.getUnlocalizedName());
+		GameRegistry.registerBlock(ore_carbonrich, ItemBlockBase.class, ore_carbonrich.getUnlocalizedName());
 
 		// Vanilla ores (for other planets)
 		GameRegistry.registerBlock(ore_iron, ItemBlockBase.class, ore_iron.getUnlocalizedName());

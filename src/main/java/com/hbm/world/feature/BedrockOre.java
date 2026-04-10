@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.hbm.blocks.BlockEnums;
 import com.hbm.blocks.BlockEnums.EnumStoneType;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.BlockBedrockOreTE.TileEntityBedrockOre;
@@ -36,9 +37,9 @@ public class BedrockOre {
 
 	public static void init() {
 
-		BedrockOreDefinition ironrich = new BedrockOreDefinition(EnumBedrockOre.IRONRICH, 1);
-		BedrockOreDefinition copperrich = new BedrockOreDefinition(EnumBedrockOre.COPPERRICH, 1);
-		BedrockOreDefinition carbonrich = new BedrockOreDefinition(EnumBedrockOre.CARBONRICH,1);
+		BedrockOreDefinition ironrich = new BedrockOreDefinition(DictFrame.fromOne(ModBlocks.ore_ironrich, BlockEnums.EnumBedrockOreType.IRONRICH,2), 1,0xD8D8D8);
+		BedrockOreDefinition copperrich = new BedrockOreDefinition(DictFrame.fromOne(ModBlocks.ore_copperrich, BlockEnums.EnumBedrockOreType.COPPERRICH,2),1, 0xA35D2B);
+		BedrockOreDefinition carbonrich = new BedrockOreDefinition(DictFrame.fromOne(ModBlocks.ore_carbonrich, BlockEnums.EnumBedrockOreType.CARBONRICH ,2),1,0x141414);
 
 		// NTMain bedrock ores
 		BedrockOreDefinition iron = new BedrockOreDefinition(EnumBedrockOre.IRON,													1);
@@ -83,11 +84,11 @@ public class BedrockOre {
 		registerBedrockOre(weightedOres, copperrich, 100);
 		registerBedrockOre(weightedOres, carbonrich, 100);
 
-		// Earth ores
-		registerBedrockOre(weightedOres, iron, WorldConfig.bedrockIronSpawn);
-		registerBedrockOre(weightedOres, copper, WorldConfig.bedrockCopperSpawn);
-		registerBedrockOre(weightedOres, coal, WorldConfig.bedrockCoalSpawn);
-		registerBedrockOre(weightedOres, bauxite, WorldConfig.bedrockBauxiteSpawn);
+		// Earth ores de sand orsch
+		//registerBedrockOre(weightedOres, iron, WorldConfig.bedrockIronSpawn);
+		//registerBedrockOre(weightedOres, copper, WorldConfig.bedrockCopperSpawn);
+		//registerBedrockOre(weightedOres, coal, WorldConfig.bedrockCoalSpawn);
+		//registerBedrockOre(weightedOres, bauxite, WorldConfig.bedrockBauxiteSpawn);
 
 		// Nether ores
 		registerBedrockOre(weightedOresNether, glowstone, WorldConfig.bedrockGlowstoneSpawn);
@@ -221,22 +222,54 @@ public class BedrockOre {
 				}
 			}
 		}
-		if(targetBlock == Blocks.stone) { // Assumes this is overworld
-			// Get the top block
+		if(targetBlock == Blocks.stone) { // Overworld-Markierung
 			int surfaceY = world.getTopSolidOrLiquidBlock(x, z);
 
-			// Spawn a patch of coal ores
+			// Standard-Blöcke (Failsafe)
+			Block oreBlock = Blocks.coal_ore;
+			Block centerBlock = Blocks.coal_block;
+			Block stoneType = Blocks.stone; // Basis für den Hügel
+
+			// Dynamische Auswahl basierend auf dem Stack-Inhalt
+			String displayName = stack.getDisplayName().toLowerCase();
+
+			if(displayName.contains("iron")) {
+				oreBlock = ModBlocks.ore_iron; // Oder Blocks.iron_ore
+				centerBlock = Blocks.iron_block;
+			} else if(displayName.contains("copper")) {
+				oreBlock = ModBlocks.ore_copper;
+				centerBlock = ModBlocks.block_copper; // Prüfe ob ModBlocks.block_copper bei dir so heißt
+			} else if(displayName.contains("carbon") || displayName.contains("coal")) {
+				oreBlock = Blocks.coal_ore;
+				centerBlock = Blocks.coal_block;
+			}
+
+			// Hügel-Generierung (3x3 oder 5x5 kleiner "Bump")
 			for(int ix = x - 2; ix <= x + 2; ix++) {
 				for(int iz = z - 2; iz <= z + 2; iz++) {
-					if(world.rand.nextFloat() < 0.3F) {
-						// Dig down slightly to place ores
-						int y = world.getTopSolidOrLiquidBlock(ix, iz) - 1;
-						world.setBlock(ix, y, iz, Blocks.coal_ore);
+
+					// Distanz zum Zentrum für Hügelform
+					double dist = Math.sqrt(Math.pow(ix - x, 2) + Math.pow(iz - z, 2));
+					int y = world.getTopSolidOrLiquidBlock(ix, iz);
+
+					if(dist < 2.5) {
+						// Erzeuge den Hügel (1-2 Blöcke hoch)
+						int height = dist < 1.2 ? 2 : 1;
+
+						for(int h = 0; h < height; h++) {
+							Block toPlace = stoneType;
+
+							// Zufällige Erz-Flecken im Hügel
+							if(world.rand.nextFloat() < 0.4F) toPlace = oreBlock;
+
+							// Das absolute Zentrum
+							if(ix == x && iz == z && h == height - 1) toPlace = centerBlock;
+
+							world.setBlock(ix, y + h, iz, toPlace);
+						}
 					}
 				}
 			}
-			// Change the surface block to visually mark the bedrock ore
-			world.setBlock(x, surfaceY, z, Blocks.coal_block);
 		}
 	}
 
