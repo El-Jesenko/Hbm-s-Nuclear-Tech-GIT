@@ -16,12 +16,13 @@ public class ItemByproduct extends ItemEnumMulti {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int pass) {
-		
+
 		EnumByproduct ore = EnumUtil.grabEnumSafely(EnumByproduct.class, stack.getItemDamage());
 		return ore.color;
 	}
-	
+
 	public static enum EnumByproduct {
+		B_GOLD(0xF2E394),
 		B_IRON(0xE2C0AA),
 		B_COPPER(0xEC9A63),
 		B_LITHIUM(0xEDEDED),
@@ -38,9 +39,9 @@ public class ItemByproduct extends ItemEnumMulti {
 		B_POLONIUM(0xCADFDF),
 		B_URANIUM(0x868D82),
 		B_STRONTIUM(0xF1E8bA);
-		
+
 		public int color;
-		
+
 		private EnumByproduct(int color) {
 			this.color = color;
 		}

@@ -39,7 +39,7 @@ public class ItemBedrockOre extends ItemEnumMulti {
 	    this.overlayIconBismuth = p_94581_1_.registerIcon(RefStrings.MODID + ":ore_overlay_b");
 	    this.overlayIcon = p_94581_1_.registerIcon(RefStrings.MODID + ":ore_overlay");
 	}
-	
+
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -56,30 +56,30 @@ public class ItemBedrockOre extends ItemEnumMulti {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getColorFromItemStack(ItemStack stack, int pass) {
-		
+
 		if(pass == 1) {
 			EnumBedrockOre ore = EnumUtil.grabEnumSafely(EnumBedrockOre.class, stack.getItemDamage());
 			return ore.color;
 		}
-		
+
 		return 0xffffff;
 	}
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		
+
 		EnumBedrockOre ore = EnumUtil.grabEnumSafely(EnumBedrockOre.class, stack.getItemDamage());
 		String oreName = StatCollector.translateToLocal("item.ore." + ore.oreName.toLowerCase(Locale.US));
 		return StatCollector.translateToLocalFormatted(this.getUnlocalizedNameInefficiently(stack) + ".name", oreName);
 	}
-	
+
 	/*
 	 * BYPRODUCT TIER 1: NITRIC ACID - CHEMPLANT GATE / NO GATE
 	 * BYPRODUCT TIER 2: ORGANIC SOLVENT - CRACKING OIL GATE
 	 * BYPRODUCT TIER 3: HIPERF SOLVENT - RBMK GATE
 	 * BYPRODUCT TIER 4: SCHRABIDIC ACID - FUSION GATE?
 	 */
-	
+
 	/*
 	 * [BEDROCK x1] -C-> [CENTRIFUGED x4] -(PER)-> [CLEANED x4] -C-> [SEPARATED x16] -(SUL)-> [PURIFIED x16] -C-> [ENRICHED x64]
 	 *                                                                       \
@@ -94,7 +94,13 @@ public class ItemBedrockOre extends ItemEnumMulti {
 
 	public static enum EnumBedrockOre {
 		//Ore								Byproduct	1,			2,			3
+		IRONRICH("Iron-Rich", 0xE2C0AA,				B_TITANIUM,	B_TITANIUM,	B_TITANIUM), //titanium, sulfur from pyrite
+		COPPERRICH("Copper-Rich", 0xEC9A63, B_GOLD,		B_GOLD,		B_GOLD), //gold from chalcopyrite, which is copper iron sulfide
+		CARBONRICH("Carbon-Rich", 0x3B3B3B,				B_SULFUR,	B_SULFUR,	B_SULFUR), //sulfur sulfur sulfur sulfur
+
 		IRON("Iron", 0xE2C0AA,						B_SULFUR,	B_TITANIUM,	B_TITANIUM), //titanium, sulfur from pyrite
+
+
 		COPPER("Copper", 0xEC9A63,					B_SULFUR,	B_SULFUR,	B_SULFUR), //sulfur sulfur sulfur sulfur
 		BORAX("Borax", 0xE4BE74, 					B_LITHIUM, 	B_CALCIUM, 	B_CALCIUM), //calcium from ulexite, uhhh lithium?
 		ASBESTOS("Asbestos", 0xBFBFB9,				B_SILICON,	B_SILICON,	B_SILICON), //quartz i guess?
@@ -113,11 +119,11 @@ public class ItemBedrockOre extends ItemEnumMulti {
 		HEMATITE("Hematite", 0xA37B72,				B_SULFUR,	B_TITANIUM,	B_TITANIUM), //titanium, sulfur from pyrite
 		MALACHITE("Malachite", 0x66B48C,			B_SULFUR,	B_SULFUR,	B_SULFUR), //sulfur sulfur sulfur sulfur
 		NEODYMIUM("Neodymium", 0x8F8F5F,			B_LITHIUM,	B_SILICON,	B_BISMUTH); //yeah whatever
-		
+
 		public String oreName;
 		public int color;
 		public EnumByproduct[] byproducts;
-		
+
 		/** Byproduct count must be consistent with current tier count, use NULL if no byproduct should be generated! */
 		private EnumBedrockOre(String name, int color, EnumByproduct... by) {
 			this.oreName = name;

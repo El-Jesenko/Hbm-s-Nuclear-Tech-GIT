@@ -35,6 +35,11 @@ public class BedrockOre {
 	public static HashMap<String, BedrockOreDefinition> replacements = new HashMap<>();
 
 	public static void init() {
+
+		BedrockOreDefinition ironrich = new BedrockOreDefinition(EnumBedrockOre.IRONRICH, 1);
+		BedrockOreDefinition copperrich = new BedrockOreDefinition(EnumBedrockOre.COPPERRICH, 1);
+		BedrockOreDefinition carbonrich = new BedrockOreDefinition(EnumBedrockOre.CARBONRICH,1);
+
 		// NTMain bedrock ores
 		BedrockOreDefinition iron = new BedrockOreDefinition(EnumBedrockOre.IRON,													1);
 		BedrockOreDefinition copper = new BedrockOreDefinition(EnumBedrockOre.COPPER,												1);
@@ -73,6 +78,10 @@ public class BedrockOre {
 		BedrockOreDefinition hematite = new BedrockOreDefinition(DictFrame.fromOne(ModBlocks.stone_resource, EnumStoneType.HEMATITE, 2), 1, 0xEF7213);
 
 
+
+		registerBedrockOre(weightedOres, ironrich, 100);
+		registerBedrockOre(weightedOres, copperrich, 100);
+		registerBedrockOre(weightedOres, carbonrich, 100);
 
 		// Earth ores
 		registerBedrockOre(weightedOres, iron, WorldConfig.bedrockIronSpawn);
@@ -211,6 +220,23 @@ public class BedrockOre {
 					}
 				}
 			}
+		}
+		if(targetBlock == Blocks.stone) { // Assumes this is overworld
+			// Get the top block
+			int surfaceY = world.getTopSolidOrLiquidBlock(x, z);
+
+			// Spawn a patch of coal ores
+			for(int ix = x - 2; ix <= x + 2; ix++) {
+				for(int iz = z - 2; iz <= z + 2; iz++) {
+					if(world.rand.nextFloat() < 0.3F) {
+						// Dig down slightly to place ores
+						int y = world.getTopSolidOrLiquidBlock(ix, iz) - 1;
+						world.setBlock(ix, y, iz, Blocks.coal_ore);
+					}
+				}
+			}
+			// Change the surface block to visually mark the bedrock ore
+			world.setBlock(x, surfaceY, z, Blocks.coal_block);
 		}
 	}
 
