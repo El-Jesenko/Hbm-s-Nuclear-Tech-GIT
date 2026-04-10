@@ -54,6 +54,8 @@ public class ModBlocks {
 	public static Block obj_tester;
 	public static Block structure_anchor;
 
+	public static Block ore_epsteinium;
+
 	// Vanilla ores for other planets
 	public static Block ore_iron;
 	public static Block ore_gold;
@@ -1414,6 +1416,8 @@ public class ModBlocks {
 		obj_tester = new TestObjTester(Material.iron).setBlockName("obj_tester").setCreativeTab(null).setHardness(2.5F).setResistance(10.0F);
 		structure_anchor = new BlockGeneric(Material.iron).setBlockName("structure_anchor").setCreativeTab(null).setHardness(2.5F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":structure_anchor");
 
+		ore_epsteinium = new BlockOre(Material.rock).setBlockName("ore_epsteinium").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(10.0F).setBlockTextureName(RefStrings.MODID + ":ore_epsteinium");
+
 		ore_iron = new BlockOre(Material.rock, Blocks.iron_ore).setBlockName("ore_iron").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(5.0F).setBlockTextureName(RefStrings.MODID + ":ore_iron");
 		ore_gold = new BlockOre(Material.rock, Blocks.gold_ore).setBlockName("ore_gold").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(5.0F).setBlockTextureName(RefStrings.MODID + ":ore_gold");
 		ore_redstone = new BlockOre(Material.rock, Blocks.redstone_ore).setBlockName("ore_redstone").setCreativeTab(MainRegistry.blockTab).setHardness(3.0F).setResistance(5.0F).setBlockTextureName(RefStrings.MODID + ":ore_redstone");
@@ -2742,6 +2746,8 @@ public class ModBlocks {
 		GameRegistry.registerBlock(event_tester, event_tester.getUnlocalizedName());
 		GameRegistry.registerBlock(obj_tester, obj_tester.getUnlocalizedName());
 		GameRegistry.registerBlock(structure_anchor, structure_anchor.getUnlocalizedName());
+
+		GameRegistry.registerBlock(ore_epsteinium, ItemBlockBase.class, ore_epsteinium.getUnlocalizedName());
 
 		// Vanilla ores (for other planets)
 		GameRegistry.registerBlock(ore_iron, ItemBlockBase.class, ore_iron.getUnlocalizedName());

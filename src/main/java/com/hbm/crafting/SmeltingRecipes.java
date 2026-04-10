@@ -29,6 +29,7 @@ public class SmeltingRecipes {
 
 		GameRegistry.addSmelting(ModItems.flour, new ItemStack(Items.bread), 1.0F);
 
+		GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_epsteinium), new ItemStack(ModItems.ingot_epsteinium), 24.0F);
 		// Oredict doesn't work for vanilla smelting :(
 		GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_iron), new ItemStack(Items.iron_ingot), 0.7F);
 		GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_gold), new ItemStack(Items.gold_ingot), 1.0F);
