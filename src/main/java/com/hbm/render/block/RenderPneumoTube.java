@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.hbm.blocks.network.pneumatic.PneumoTube;
 import com.hbm.lib.Library;
 import com.hbm.render.util.RenderBlocksNT;
+import com.hbm.tileentity.network.pneumatic.TileEntityPneumoTube.PneumaticChannel;
 import com.hbm.tileentity.network.pneumatic.TileEntityPneumoTube;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -131,7 +132,7 @@ public class RenderPneumoTube implements ISimpleBlockRenderingHandler {
 		
 		if(tile != null) {
 			renderCon(duct, x, y, z, renderer, tile.insertionDir, duct.iconIn);
-			renderCon(duct, x, y, z, renderer, tile.ejectionDir, duct.iconOut);
+			renderCon(duct, x, y, z, renderer, tile.ejectionDir, getOutputIcon(duct, tile.receiveChannel));
 			for(ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
 				if(duct.canConnectToAir(world, x, y, z, dir)) renderCon(duct, x, y, z, renderer, dir, duct.iconConnector);
 			}
@@ -142,6 +143,12 @@ public class RenderPneumoTube implements ISimpleBlockRenderingHandler {
 		return true;
 	}
 	
+	protected static IIcon getOutputIcon(PneumoTube duct, byte id) {
+		PneumaticChannel channel = PneumaticChannel.fromId(id);
+		if(channel == PneumaticChannel.RED) return duct.iconOutRed;
+		return duct.iconOutGreen != null ? duct.iconOutGreen : duct.iconOut;
+	}
+
 	protected static void renderCon(PneumoTube duct, int x, int y, int z, RenderBlocks renderer, ForgeDirection dir, IIcon newIcon) {
 
 		double lower = 0.3125D;
